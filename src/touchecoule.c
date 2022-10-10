@@ -7,7 +7,7 @@ int
 main()
 {
 	Player player1, player2;
-	int shipsize, turnc = 1;
+	int shipsize, turnc = 1, placetrig = 1;;
 	char nextship;
 
 	printf("Welcome to battleships,\n\n"
@@ -31,11 +31,15 @@ main()
 
 	printf("You must now place your ships, enter the size of the\n"
 			"first one :");
-	while (1){
+	while (placetrig){
 		scanf("%i", &shipsize);
-		getchar();
+		getchar(); 
+		//getchar is used in order to free the buffer for the next scan
 
-		player1.lives += shipsize; player2.lives +=shipsize;
+		player1.lives += shipsize;
+		player2.lives += shipsize;
+		//lives are the number of ship boxes still alive
+
 		place_ship(&player1, &player2, shipsize);
 
 		printf("If you want to place another ship, press n\n"
@@ -45,7 +49,7 @@ main()
 
 		if (nextship == 'n'){
 			printf("Enter the size of the next ship:");
-		} else break;
+		} else placetrig = 0;
 	};
 
 
@@ -53,6 +57,8 @@ main()
 		if (turnc & 1) turn(&player1, &player2);
 		else turn(&player2, &player1);
 		turnc++;
+		//first argument of turn is the one who attacks, it needs to
+		//change each turn (hence the parity test)
 	};
 
 	if (player1.lives == 0) printf("Well done Player 2, ");
@@ -67,6 +73,17 @@ main()
 }
 
 
+/* prints the given grid with the format :
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ]
+ * [ x x x x x x x x x x ] */
 void
 print_grid(char grid[10][10])
 {
@@ -78,6 +95,9 @@ print_grid(char grid[10][10])
 	};
 }
 
+
+/* instead of a proper clear, just write enough newlines
+ * in order to make it dissuasive to look back */
 void
 clear_screen(void)
 {

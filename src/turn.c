@@ -3,6 +3,8 @@
 #include "turn.h"
 
 
+/* returns the result of the shooting at these coordinates,
+ * and updates the grids in consequence */
 int
 aim_coord(int x, int y, char playgrd [10][10], char advgrd [10][10])
 {
@@ -22,6 +24,8 @@ aim_coord(int x, int y, char playgrd [10][10], char advgrd [10][10])
 }
 
 
+/* handles the turn of player shooting on advers. we need 2 calls to
+ * turn in order to complete a full turn*/
 void
 turn(Player *player, Player *advers)
 {
@@ -42,6 +46,8 @@ turn(Player *player, Player *advers)
 	getchar();
 
 	res = aim_coord(x, y, player->hits, advers->grid);
+	//if player shoots out of the grid, we consider it their fault and
+	//they loose their turn
 	if (res == OORANGE) printf("coordinates were out of the grid\n");
 	else if (res == 1){
 		advers->lives--;
@@ -52,7 +58,7 @@ turn(Player *player, Player *advers)
 		print_grid(player->hits);
 	};
 
-	printf("Press enter to finish your turn\n");
+	printf("Press enter to end your turn\n");
 	getchar();
 	clear_screen();
 }

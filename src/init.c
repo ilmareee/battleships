@@ -4,6 +4,7 @@
 #include "init.h"
 
 
+/* initialises the given grid with empty/water boxes*/
 void
 init_grid(char grid[10][10])
 {
@@ -14,6 +15,10 @@ init_grid(char grid[10][10])
 }
 
 
+/* manages ship placement for one ship (and both players), it uses an
+ * alternative structure (Shipadd) in order to verify the validity of
+ * the placement before applying it (and for handling the coordinates
+ * and direction) */
 void
 place_ship(Player *player1, Player *player2, int shipsize)
 {
@@ -104,6 +109,7 @@ place_ship(Player *player1, Player *player2, int shipsize)
 }
 
 
+/* tries to place the ship, and fails safely if unable to do it*/
 int
 set_ship(Shipadd *ship)
 {
